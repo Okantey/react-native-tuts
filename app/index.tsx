@@ -11,9 +11,20 @@ import {
 import React from "react";
 import { StatusBar } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import Button from "@/components/button";
+import { router } from "expo-router";
+import { useState } from "react";
+import Feather from "@expo/vector-icons/Feather";
+
 const Index = () => {
-  console.log(Platform.OS);
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(true);
+
+  const handleLogin = () => {
+    console.log("Email", email);
+    console.log("Passoword", password);
+  };
+
   return (
     <SafeAreaView
       style={{ backgroundColor: "white", flex: 1, paddingHorizontal: 20 }}
@@ -24,26 +35,44 @@ const Index = () => {
         </Text>
         <View style={{ gap: 30 }}>
           <TextInput
+            value={email}
+            onChangeText={(text) => setEmail(text)}
             placeholder="Email"
             keyboardType="phone-pad"
             style={{
               borderWidth: 1,
-              borderColor: "red",
+              borderColor: "gray",
               paddingVertical: 15,
               paddingHorizontal: 10,
               borderRadius: 20,
             }}
           />
-          <TextInput
+          <View
             style={{
               borderWidth: 1,
-              borderColor: "red",
+              borderColor: "gray",
               paddingVertical: 15,
               paddingHorizontal: 10,
               borderRadius: 20,
+              flexDirection: "row",
+              justifyContent: "space-between",
             }}
-          />
+          >
+            <TextInput
+              placeholder="Password"
+              secureTextEntry={showPassword}
+              value={password}
+              onChangeText={(text) => setPassword(text)}
+            />
+            <Feather
+              onPress={() => setShowPassword(!showPassword)}
+              name={showPassword ? "eye-off" : "eye"}
+              size={24}
+              color="black"
+            />
+          </View>
           <TouchableOpacity
+            onPress={() => handleLogin()}
             style={{ backgroundColor: "black", padding: 20, borderRadius: 20 }}
           >
             <Text
@@ -54,7 +83,7 @@ const Index = () => {
                 textAlign: "center",
               }}
             >
-              Click me
+              Login
             </Text>
           </TouchableOpacity>
         </View>
