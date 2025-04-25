@@ -4,7 +4,7 @@ const InitialLayout = () => {
   return (
     <Stack screenOptions={{ headerShown: false }}>
       <Stack.Screen name="index" />
-      <Stack.Screen name="about" />
+      <Stack.Screen name="todolist" />
     </Stack>
   );
 };

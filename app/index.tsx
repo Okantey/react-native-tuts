@@ -7,6 +7,7 @@ import {
   ScrollView,
   TextInput,
   TouchableOpacity,
+  Alert,
 } from "react-native";
 import React from "react";
 import { StatusBar } from "react-native";
@@ -20,9 +21,22 @@ const Index = () => {
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(true);
 
+  // this function handles the login
   const handleLogin = () => {
-    console.log("Email", email);
-    console.log("Passoword", password);
+    if (email === "okantey@gmail.com" && password === "123456") {
+      router.push("/todolist");
+    } else {
+      Alert.alert("An error occurred", "Invalid email or password", [
+        {
+          text: "Retry",
+          onPress: () => handleLogin(),
+        },
+        {
+          text: "Cancel",
+          onPress: () => console.log("Cancel Pressed"),
+        },
+      ]);
+    }
   };
 
   return (
