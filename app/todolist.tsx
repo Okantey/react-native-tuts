@@ -1,6 +1,8 @@
 import { View, Text, TextInput, TouchableOpacity } from "react-native";
 import React, { useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
+import Feather from "@expo/vector-icons/Feather";
+import * as SecureStore from "expo-secure-store";
 
 type TodoItem = {
   id: number;
@@ -12,20 +14,46 @@ type TodoItem = {
 
 const TodoList = () => {
   const [todo, setTodo] = useState("");
-  const [todos, setTodos] = useState<TodoItem[]>([]);
-
-  console.log("This is :   ", todo);
+  const [todos, setTodos] = useState<TodoItem[]>(() => {
+    const storedTodos = SecureStore.getItem("todos");
+    return storedTodos ? JSON.parse(storedTodos) : [];
+  });
 
   // this function adds a todo item to the list
-  const handleTodoAdd = () => {
+  const handleTodoAdd = async () => {
     const newTodo = {
-      id: Math.random(),
+      id: Math.random() * 50,
       name: todo,
-      priorityLevel: "Medium",
+      priorityLevel: "Low",
       isCompleted: false,
       date: new Date().getDate(),
     };
+    console.log(newTodo);
     setTodos([...todos, newTodo]);
+    await SecureStore.setItemAsync(
+      "todos",
+      JSON.stringify([...todos, newTodo])
+    );
+    setTodo("");
+  };
+
+  // handle priority colors
+  const handlePriority = (priority: string) => {
+    switch (priority) {
+      case "Low":
+        return "green";
+      case "Medium":
+        return "yellow";
+      case "High":
+        return "red";
+    }
+  };
+
+  // handle delete function
+  const handleDelete = async (id: number) => {
+    const filteredTodos = todos.filter((item) => item.id !== id);
+    setTodos(filteredTodos);
+    await SecureStore.setItemAsync("todos", JSON.stringify(filteredTodos));
   };
 
   return (
@@ -63,8 +91,30 @@ const TodoList = () => {
 
       <View>
         {todos.map((item) => (
-          <View key={item.id}>
-            <Text>{item.name}</Text>
+          <View
+            key={item.id}
+            style={{
+              flexDirection: "row",
+              justifyContent: "space-between",
+              alignItems: "center",
+              marginVertical: 10,
+            }}
+          >
+            <View>
+              <Text style={{ fontSize: 18, fontWeight: "600" }}>
+                {item.name}
+              </Text>
+              <Text style={{ color: handlePriority(item.priorityLevel) }}>
+                {item.priorityLevel}
+              </Text>
+            </View>
+
+            <Feather
+              onPress={() => handleDelete(item.id)}
+              name="trash"
+              size={24}
+              color={"red"}
+            />
           </View>
         ))}
       </View>

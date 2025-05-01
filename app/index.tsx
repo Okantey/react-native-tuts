@@ -23,20 +23,7 @@ const Index = () => {
 
   // this function handles the login
   const handleLogin = () => {
-    if (email === "okantey@gmail.com" && password === "123456") {
-      router.push("/todolist");
-    } else {
-      Alert.alert("An error occurred", "Invalid email or password", [
-        {
-          text: "Retry",
-          onPress: () => handleLogin(),
-        },
-        {
-          text: "Cancel",
-          onPress: () => console.log("Cancel Pressed"),
-        },
-      ]);
-    }
+    router.push("/todolist");
   };
 
   return (
