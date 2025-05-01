@@ -15,6 +15,7 @@ type TodoItem = {
 const TodoList = () => {
   const [todo, setTodo] = useState("");
   const [todos, setTodos] = useState<TodoItem[]>(() => {
+    // function that checks secure store if there are any todos. if there is then it parses it else it just sets it to an empty array
     const storedTodos = SecureStore.getItem("todos");
     return storedTodos ? JSON.parse(storedTodos) : [];
   });
@@ -29,11 +30,14 @@ const TodoList = () => {
       date: new Date().getDate(),
     };
     console.log(newTodo);
+    // update the existing todos array with the new one
     setTodos([...todos, newTodo]);
+    // persist our todos in memory so we can access it later
     await SecureStore.setItemAsync(
       "todos",
       JSON.stringify([...todos, newTodo])
     );
+    // clear the input field
     setTodo("");
   };
 
@@ -51,8 +55,11 @@ const TodoList = () => {
 
   // handle delete function
   const handleDelete = async (id: number) => {
+    // returns a new array of todos without the todo item passed to the function
     const filteredTodos = todos.filter((item) => item.id !== id);
+    //update the existing todos with the filtered one
     setTodos(filteredTodos);
+    // persist the updated todos in memory
     await SecureStore.setItemAsync("todos", JSON.stringify(filteredTodos));
   };
 
