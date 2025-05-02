@@ -15,6 +15,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { router } from "expo-router";
 import { useState } from "react";
 import Feather from "@expo/vector-icons/Feather";
+import Button from "@/components/button";
 
 const Index = () => {
   const [email, setEmail] = useState("");
@@ -87,6 +88,21 @@ const Index = () => {
               Login
             </Text>
           </TouchableOpacity>
+
+          <Button
+            text="Login"
+            backgroundColor="red"
+            width={100}
+            color="white"
+            padding={20}
+          />
+          <Button
+            text="Register"
+            backgroundColor="blue"
+            width={200}
+            color="white"
+            padding={20}
+          />
         </View>
       </ScrollView>
     </SafeAreaView>
