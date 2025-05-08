@@ -1,8 +1,15 @@
-import { View, Text, TextInput, TouchableOpacity } from "react-native";
+import {
+  View,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  ActivityIndicator,
+} from "react-native";
 import React, { useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import Feather from "@expo/vector-icons/Feather";
 import * as SecureStore from "expo-secure-store";
+import { useEffect } from "react";
 
 type TodoItem = {
   id: number;
@@ -19,6 +26,34 @@ const TodoList = () => {
     const storedTodos = SecureStore.getItem("todos");
     return storedTodos ? JSON.parse(storedTodos) : [];
   });
+  const [posts, setPosts] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  // use effect allows us to run side effects in our functional components
+  useEffect(() => {
+    // handleGetPosts();
+    setTimeout(() => {
+      setLoading(false);
+    }, 5000);
+  }, []);
+
+  // get all posts from our backend
+  const handleGetPosts = async () => {
+    // set loading indicator to true
+    setLoading(true);
+    try {
+      // await a fetch call to our server
+      const response = await fetch("http://localhost:3000/posts");
+      // parse the response into json format
+      const data = await response.json();
+      console.log(data);
+    } catch (error) {
+      console.log(error);
+    } finally {
+      // this block runs regardless of whether the api call was successful or not
+      setLoading(false);
+    }
+  };
 
   // this function adds a todo item to the list
   const handleTodoAdd = async () => {
@@ -124,6 +159,14 @@ const TodoList = () => {
             />
           </View>
         ))}
+      </View>
+
+      <View>
+        {loading ? (
+          <ActivityIndicator size="large" color={"red"} />
+        ) : (
+          <Text>This is is the data</Text>
+        )}
       </View>
     </SafeAreaView>
   );
