@@ -34,7 +34,7 @@ const TodoList = () => {
     // handleGetPosts();
     setTimeout(() => {
       setLoading(false);
-    }, 5000);
+    }, 10000);
   }, []);
 
   // get all posts from our backend
@@ -165,7 +165,11 @@ const TodoList = () => {
         {loading ? (
           <ActivityIndicator size="large" color={"red"} />
         ) : (
-          <Text>This is is the data</Text>
+          <View className="flex justify-center items-center gap-4 border py-20">
+            <Text className="text-4xl text-red-700 font-bold ">
+              This is is the data
+            </Text>
+          </View>
         )}
       </View>
     </SafeAreaView>
