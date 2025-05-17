@@ -24,7 +24,7 @@ const Index = () => {
 
   // this function handles the login
   const handleLogin = () => {
-    router.push("/todolist");
+    router.push("/(tabs)/home");
   };
 
   return (
@@ -35,7 +35,7 @@ const Index = () => {
         <Text style={{ fontSize: 30, fontWeight: "800", marginBottom: 40 }}>
           Login
         </Text>
-        <View style={{ gap: 30 }}>
+        <View style={{ gap: 30 }} className="dark:">
           <TextInput
             value={email}
             onChangeText={(text) => setEmail(text)}
@@ -75,7 +75,7 @@ const Index = () => {
           </View>
           <TouchableOpacity
             onPress={() => handleLogin()}
-            style={{ backgroundColor: "black", padding: 20, borderRadius: 20 }}
+            style={{ backgroundColor: "red", padding: 15, borderRadius: 20 }}
           >
             <Text
               style={{
@@ -88,21 +88,6 @@ const Index = () => {
               Login
             </Text>
           </TouchableOpacity>
-
-          <Button
-            text="Login"
-            backgroundColor="red"
-            width={100}
-            color="white"
-            padding={20}
-          />
-          <Button
-            text="Register"
-            backgroundColor="blue"
-            width={200}
-            color="white"
-            padding={20}
-          />
         </View>
       </ScrollView>
     </SafeAreaView>

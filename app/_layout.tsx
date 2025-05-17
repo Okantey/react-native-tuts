@@ -1,12 +1,14 @@
 import { Stack } from "expo-router";
 import "../global.css";
+import { ThemeProvider } from "@/context/ThemeContext";
 
 const InitialLayout = () => {
   return (
-    <Stack screenOptions={{ headerShown: false }}>
-      <Stack.Screen name="index" />
-      <Stack.Screen name="todolist" />
-    </Stack>
+    <ThemeProvider>
+      <Stack screenOptions={{ headerShown: false }}>
+        <Stack.Screen name="index" />
+      </Stack>
+    </ThemeProvider>
   );
 };
 
