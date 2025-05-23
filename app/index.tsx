@@ -32,7 +32,14 @@ const Index = () => {
       style={{ backgroundColor: "white", flex: 1, paddingHorizontal: 20 }}
     >
       <ScrollView>
-        <Text style={{ fontSize: 30, fontWeight: "800", marginBottom: 40 }}>
+        <Text
+          style={{
+            fontSize: 30,
+            fontWeight: "800",
+            marginBottom: 40,
+            fontFamily: "leckerli-regular",
+          }}
+        >
           Login
         </Text>
         <View style={{ gap: 30 }} className="dark:">
@@ -83,6 +90,7 @@ const Index = () => {
                 fontWeight: "800",
                 fontSize: 20,
                 textAlign: "center",
+                fontFamily: "leckerli-regular",
               }}
             >
               Login
